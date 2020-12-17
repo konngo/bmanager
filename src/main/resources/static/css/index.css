@@ -14,3 +14,10 @@
     height: 32px;
     margin: 16px;
 }
+
+@media screen and (max-width: 1024px) {
+
+    table td{
+    }
+
+}

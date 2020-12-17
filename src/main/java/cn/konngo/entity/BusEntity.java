@@ -32,7 +32,46 @@ public class BusEntity implements Serializable {
         private int siji;
 
         //线路
-        private int lines;
+        private int buslines;
 
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTypes() {
+        return types;
+    }
+
+    public void setTypes(String types) {
+        this.types = types;
+    }
+
+    public int getSiji() {
+        return siji;
+    }
+
+    public void setSiji(int siji) {
+        this.siji = siji;
+    }
+
+    public int getBuslines() {
+        return buslines;
+    }
+
+    public void setBuslines(int buslines) {
+        this.buslines = buslines;
+    }
 }
