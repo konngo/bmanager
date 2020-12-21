@@ -24,7 +24,7 @@ public class BusController {
         Map map=new HashMap();
         map.put("code","0");
         map.put("msg","");
-        List list=busDao.findAll();
+        List list=busDao.list();
         map.put("count",list.size());
         map.put("data",list);
         return map;
@@ -33,13 +33,17 @@ public class BusController {
     @RequestMapping("delete")
     @ResponseBody
         public boolean delte(int id){
-        busDao.deleteById(id);
+        busDao.delete(id);
         return true;
     }
 
     @RequestMapping("addOrUpdate")
     public String  saveOrUpdate(BusEntity busEntity){
-        busDao.save(busEntity);
+        if (busEntity.getId()==0||(""+busEntity.getId()).equals("")){
+            busDao.insert(busEntity);
+        }else {
+            busDao.update(busEntity);
+        }
         return "bus";
     }
 

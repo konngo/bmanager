@@ -14,7 +14,7 @@
     <script src="/lib/jquery.min.js"></script>
     <style>
         @media screen and (max-width: 1024px) {
-            .video-player{display: none;}
+            /*.video-player{display: none;}*/
             .login{
                 height:100%;width:100%;
                 padding: 20px;
@@ -31,10 +31,12 @@
 </head>
 <body>
 <div id="app">
+
     <video class="video-player" preload="auto" autoplay="autoplay" loop="loop" data-height="1080" data-width="1920" height="1080" width="1920">
         <source src="/video/login.mp4" type="video/mp4">
     </video>
     <div class="video_mask"></div>
+
     <div class="login">
         <h1>后台管理登录</h1>
         <form class="layui-form" method="post" action="/users/login">
@@ -53,11 +55,7 @@
     var vue=new Vue({
         el:'#app',
         data:{
-            status:<#if status?if_exists>
-                false
-            <#else>
-            true
-            </#if>
+            status:false
         },
         methods:{
             showLoginFailed(){
@@ -72,6 +70,7 @@
     });
 
     //video背景
+
     $(window).resize(function(){
         if($(".video-player").width() > $(window).width()){
             $(".video-player").css({"height":$(window).height(),"width":"auto","left":-($(".video-player").width()-$(window).width())/2});

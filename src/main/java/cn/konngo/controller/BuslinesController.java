@@ -24,7 +24,7 @@ public class BuslinesController {
         Map map=new HashMap();
         map.put("code","0");
         map.put("msg","");
-        List list=buslinesDao.findAll();
+        List list=buslinesDao.list();
         map.put("count",list.size());
         map.put("data",list);
         return map;
@@ -33,13 +33,17 @@ public class BuslinesController {
     @RequestMapping("delete")
     @ResponseBody
         public boolean delte(int id){
-        buslinesDao.deleteById(id);
+        buslinesDao.delete(id);
         return true;
     }
 
     @RequestMapping("addOrUpdate")
     public String  saveOrUpdate(BuslinesEntity buslinesEntity){
-        buslinesDao.save(buslinesEntity);
+        if (buslinesEntity.getId()==0||(""+buslinesEntity.getId()).equals("")){
+            buslinesDao.insert(buslinesEntity);
+        }else {
+            buslinesDao.update(buslinesEntity);
+        }
         return "buslines";
     }
 

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+
+
+    <style>
+    .main-content{
+        height: 500px;
+        text-align: center;
+    }
+
+    .main-content span{
+        font-size: 60px;
+        color:gray;
+    }
+</style>
+</head>
+<body>
+
+<div class="main-content">
+    <span>
+    欢迎使用本系统,<span class="x-red"  th:text="${session.users.username}"/>
+    </span>
+</div>
+
+</body>

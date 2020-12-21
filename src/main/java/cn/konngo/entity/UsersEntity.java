@@ -32,6 +32,17 @@ public class UsersEntity implements Serializable {
         //昵称
         private String nickname;
 
+        // 用户类型
+        private String type;
+
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public int getId() {
         return id;

@@ -15,4 +15,9 @@ public class IndexController {
     public String index(){
         return "main";
     }
+
+    @RequestMapping("userlogin")
+    public String userlogin(){
+        return "userlogin";
+    }
 }

@@ -34,13 +34,17 @@ public class LostsController {
     @RequestMapping("delete")
     @ResponseBody
         public boolean delte(int id){
-        lostsDao.deleteById(id);
+        lostsDao.delete(id);
         return true;
     }
 
     @RequestMapping("addOrUpdate")
     public String  saveOrUpdate(LostsEntity lostsEntity){
-        lostsDao.save(lostsEntity);
+        if (lostsEntity.getId()==0||(""+lostsEntity.getId()).equals("")){
+            lostsDao.insert(lostsEntity);
+        }else {
+            lostsDao.update(lostsEntity);
+        }
         return "losts";
     }
 

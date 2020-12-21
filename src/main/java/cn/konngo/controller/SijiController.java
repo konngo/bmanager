@@ -24,7 +24,7 @@ public class SijiController {
         Map map=new HashMap();
         map.put("code","0");
         map.put("msg","");
-        List list=sijiDao.findAll();
+        List list=sijiDao.list();
         map.put("count",list.size());
         map.put("data",list);
         return map;
@@ -33,13 +33,17 @@ public class SijiController {
     @RequestMapping("delete")
     @ResponseBody
         public boolean delte(int id){
-        sijiDao.deleteById(id);
+        sijiDao.delete(id);
         return true;
     }
 
     @RequestMapping("addOrUpdate")
     public String  saveOrUpdate(SijiEntity sijiEntity){
-        sijiDao.save(sijiEntity);
+        if (sijiEntity.getId()==0||(""+sijiEntity.getId()).equals("")){
+            sijiDao.insert(sijiEntity);
+        }else {
+            sijiDao.update(sijiEntity);
+        }
         return "siji";
     }
 

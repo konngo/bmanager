@@ -16,7 +16,7 @@ class BmanagerApplicationTests {
 
     @Test
     void select(){
-        System.out.println(usersDao.findAll());
+        System.out.println(usersDao.list());
     }
 
 }

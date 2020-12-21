@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>线路管理</title>
+    <title>司机管理</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="/css/index.css"></link>
     <link rel="stylesheet" href="/lib/layui/css/layui.css"></link>
     <link rel="stylesheet" href="/lib/jqgrid/ui.jqgrid-bootstrap.css">
+
+    <script src="https://www.layuicdn.com/auto/layui.js" v="2.5.6" e="layui"></script>
 
 
     <script src="/lib/jqgrid/grid.locale-cn.js"></script>
@@ -43,40 +45,33 @@
     </div>
 
     <div v-show="!show">
-        <form class="layui-form" action="/buslines/addOrUpdate">
+        <form class="layui-form" action="/siji/addOrUpdate">
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">编号</label>
                     <div class="layui-input-block">
-                        <input type="text" name="id"  :value="buslines. id" class="layui-input">
+                        <input type="text" name="id"  :value="siji. id" class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
-                    <label class="layui-form-label">起点站</label>
+                    <label class="layui-form-label">名称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="startstation"  :value="buslines. startstation" class="layui-input">
+                        <input type="text" name="name"  :value="siji. name" class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
-                    <label class="layui-form-label">终点站</label>
+                    <label class="layui-form-label">手机号</label>
                     <div class="layui-input-block">
-                        <input type="text" name="endstation"  :value="buslines. endstation" class="layui-input">
+                        <input type="text" name="phone"  :value="siji. phone" class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
-                    <label class="layui-form-label">发车时间</label>
+                    <label class="layui-form-label">年龄</label>
                     <div class="layui-input-block">
-                        <input type="text" name="starttime"  :value="buslines. starttime" class="layui-input">
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">到站时间</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="endtime"  :value="buslines. endtime" class="layui-input">
+                        <input type="text" name="age"  :value="siji. age" class="layui-input">
                     </div>
                 </div>
 
@@ -96,18 +91,19 @@
 
         table.render({
             elem: '#demo'
-            ,url:'/buslines/list'
+            ,url:'/siji/list'
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             ,defaultToolbar: ['filter', 'exports', 'print']
-            ,title: '线路数据表'
-            ,cols: [[
+            ,title: '司机数据表'
+            ,cols: [
+                [
                 {field:'id', title:'编号'},
-                {field:'startstation', title:'起点站'},
-                {field:'endstation', title:'终点站'},
-                {field:'starttime', title:'发车时间'},
-                {field:'endtime', title:'到站时间'},
+                {field:'name', title:'名称'},
+                {field:'phone', title:'手机号'},
+                {field:'age', title:'年龄'},
                 {fixed:'right',title:'操作',toolbar:'#barDemo'}
-            ]]
+            ]
+            ]
             ,page: true
         });
 
@@ -144,19 +140,19 @@
         el:'#app',
         data:{
             show:true,
-            buslines :{}
+            siji :{}
         },
         methods:{
             handleAdd(){
                 this.show=false;
-                this.buslines={};
+                this.siji={};
             },
-            handleEdit(buslines){
+            handleEdit(siji){
                 this.show=false;
-                this.buslines=buslines;
+                this.siji=siji;
             },
             handleDelete(id){
-                axios.get("/buslines/delete?id="+id).then(function (response) {
+                axios.get("/siji/delete?id="+id).then(function (response) {
                     this.$message.error('删除成功！');
                 }).catch(function (error) {
                     console.log(error)
