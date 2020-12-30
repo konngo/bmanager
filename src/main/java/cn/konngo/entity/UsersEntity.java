@@ -75,4 +75,15 @@ public class UsersEntity implements Serializable {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
+    @Override
+    public String toString() {
+        return "UsersEntity{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

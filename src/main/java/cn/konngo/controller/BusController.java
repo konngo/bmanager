@@ -26,7 +26,7 @@ public class BusController {
         map.put("msg","");
         List list=busDao.list();
         map.put("count",list.size());
-        map.put("data",list);
+        map.put("aaData",list);
         return map;
     }
 

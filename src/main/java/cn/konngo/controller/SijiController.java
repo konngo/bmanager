@@ -26,25 +26,30 @@ public class SijiController {
         map.put("msg","");
         List list=sijiDao.list();
         map.put("count",list.size());
-        map.put("data",list);
+        map.put("aaData",list);
         return map;
     }
 
     @RequestMapping("delete")
     @ResponseBody
-        public boolean delte(int id){
+    public HashMap delte(int id){
+        HashMap map=new HashMap();
+        map.put("code","0");
         sijiDao.delete(id);
-        return true;
+        return map;
     }
 
     @RequestMapping("addOrUpdate")
-    public String  saveOrUpdate(SijiEntity sijiEntity){
+    @ResponseBody
+    public HashMap  saveOrUpdate(SijiEntity sijiEntity){
+        HashMap map=new HashMap();
+        map.put("code","0");
         if (sijiEntity.getId()==0||(""+sijiEntity.getId()).equals("")){
             sijiDao.insert(sijiEntity);
         }else {
             sijiDao.update(sijiEntity);
         }
-        return "siji";
+        return map;
     }
 
 

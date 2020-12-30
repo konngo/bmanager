@@ -36,8 +36,8 @@ public interface UsersDao {
     /**
     * 插入
     */
-    @Insert("insert into users values(#{username},#{password},#{nickname},#{type})")
-    void insert(UsersEntity usersEntity);
+    @Insert("insert into users (username,password,nickname,type) values (#{username},#{password},#{nickname},#{type})")
+    int insert(UsersEntity usersEntity);
 
     @Select("select * from users where  username=#{username} and password=#{password}")
     UsersEntity login(String username, String password);

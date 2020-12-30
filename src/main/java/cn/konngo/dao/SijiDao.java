@@ -36,7 +36,7 @@ List<SijiEntity> list();
     /**
     * 插入
     */
-    @Insert("insert into siji values( #{name},#{phone},#{age})")
+    @Insert("insert into siji (name,phone,age) values( #{name},#{phone},#{age})")
     void insert(SijiEntity sijiEntity);
 
     }

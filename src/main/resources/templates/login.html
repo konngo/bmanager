@@ -1,85 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <title>登录</title>
+
     <meta charset="UTF-8">
-    <title>管理 - 登录</title>
-    <script src="/lib/vue.js" ></script>
-    <script src="/lib/antdesign/antd.min.js" ></script>
-    <link rel="stylesheet" href="/lib/layui/css/layui.css"></link>
-    <link rel="stylesheet" href="/lib/antdesign/antd.min.css"></link>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <link rel="stylesheet" href="/css/login.css"></link>
-    <script src="/lib/moment.min.js"></script>
-    <script src="/lib/layui/layui.js"></script>
-    <script src="/lib/jquery.min.js"></script>
-    <style>
-        @media screen and (max-width: 1024px) {
-            /*.video-player{display: none;}*/
-            .login{
-                height:100%;width:100%;
-                padding: 20px;
-                background-color:rgba(0,0,0,0.5);
-                border-radius: 4px;
-                position:absolute;left: 0;top: 0; margin:0;z-index:99;
-            }
-            .login h1{ text-align:center; color:#fff; font-size:24px; margin-bottom:20px; }
-            .form_code .code{  right:0; top:1px; cursor:pointer; }
-            .login_btn{ width:100%; height:80px;}
-            .layui-input{height:80px;font-size:40px;border-radius: 4px;}
-        }
-    </style>
+    <link rel="stylesheet" href="font/iconsmind-s/css/iconsminds.css" />
+    <link rel="stylesheet" href="font/simple-line-icons/css/simple-line-icons.css" />
+    <link rel="stylesheet" href="css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/vendor/bootstrap.rtl.only.min.css" />
+    <link rel="stylesheet" href="css/vendor/bootstrap-float-label.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="js/vendor/vue.min.js"></script>
+    <script src="js/vendor/axios.min.js"></script>
 </head>
-<body>
-<div id="app">
 
-    <video class="video-player" preload="auto" autoplay="autoplay" loop="loop" data-height="1080" data-width="1920" height="1080" width="1920">
-        <source src="/video/login.mp4" type="video/mp4">
-    </video>
-    <div class="video_mask"></div>
+<body class="background show-spinner no-footer" >
+    <div class="fixed-background"></div>
+    <main id="app">
+        <div class="container">
+            <div class="row h-100">
+                <div class="col-12 col-md-10 mx-auto my-auto">
+                    <div class="card auth-card">
+                        <div class="position-relative image-side ">
 
-    <div class="login">
-        <h1>后台管理登录</h1>
-        <form class="layui-form" method="post" action="/users/login">
-            <div class="layui-form-item">
-                <input class="layui-input" name="username" placeholder="用户名" lay-verify="required" type="text" autocomplete="off">
+                            <p class=" text-white h2">MAGIC IS IN THE DETAILS</p>
+
+                            <p class="white mb-0">
+                                Please use your credentials to login.
+                                <br>If you are not a member, please
+                                <a href="register" class="white">register</a>.
+                            </p>
+                        </div>
+                        <div class="form-side">
+                            <a href="#">
+                                <span class="logo-single"></span>
+                            </a>
+                            <h6 class="mb-4">登录</h6>
+                                <label class="form-group has-float-label mb-4">
+                                    <input class="form-control"  v-model="user.username"/>
+                                    <span>用户名</span>
+                                </label>
+
+                                <label class="form-group has-float-label mb-4">
+                                    <input class="form-control" type="password" placeholder=""  v-model="user.password"/>
+                                    <span>密码</span>
+                                </label>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span><a href="register">注册账户</a>
+<!--                                    <a href="forgetpwd.html">忘记密码</a>-->
+                                    </span>
+                                    <button @click="login" class="btn btn-primary btn-lg btn-shadow" type="submit">登录</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="layui-form-item">
-                <input class="layui-input" name="password" placeholder="密码" lay-verify="required" type="password" autocomplete="off">
-            </div>
-            <input class="layui-btn login_btn" type="submit"></input>
-        </form>
-    </div>
-</div>
-
+        </div>
+    </main>
+</body>
+<script src="js/vendor/jquery-3.3.1.min.js"></script>
+<script src="js/vendor/bootstrap.bundle.min.js"></script>
+<script src="js/dore.script.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/vendor/bootstrap-notify.min.js"></script>
 <script>
     var vue=new Vue({
-        el:'#app',
-        data:{
-            status:false
-        },
-        methods:{
-            showLoginFailed(){
-                if (this.status==false){
-                    this.$message.error('用户名或者密码错误');
-                }
+        el:"#app",
+        data(){
+            return {
+                user:{}
             }
         },
-        created(){
-            this.showLoginFailed();
+        methods:{
+            login(){
+
+                $.ajax({
+                    type: 'POST',
+                    url: host+"users/login",
+                    data: {
+                        username:this.user.username,
+                        password:this.user.password
+                    },
+                    success: function (response){
+                        console.log(response)
+                        if(response.code==0){
+                            showNotify('top', 'center', "success","登录结果","登录成功！");
+                            window.location.href="index";
+                        }else{
+                            showNotify('top', 'center', "danger","添加结果","登录失败，请检查用户名密码。");
+                        }
+                    }
+                });
+
+            }
         }
-    });
-
-    //video背景
-
-    $(window).resize(function(){
-        if($(".video-player").width() > $(window).width()){
-            $(".video-player").css({"height":$(window).height(),"width":"auto","left":-($(".video-player").width()-$(window).width())/2});
-        }else{
-            $(".video-player").css({"width":$(window).width(),"height":"auto","left":-($(".video-player").width()-$(window).width())/2});
-        }
-    }).resize();
-
+    })
 </script>
-
-</body>
 </html>

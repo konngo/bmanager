@@ -29,7 +29,7 @@ public class UserController {
         map.put("msg","");
         List list=usersDao.list();
         map.put("count",list.size());
-        map.put("data",list);
+        map.put("aaData",list);
         return map;
     }
 
@@ -56,21 +56,26 @@ public class UserController {
 
     @RequestMapping("delete")
     @ResponseBody
-    public boolean delte(int id){
+    public HashMap delte(int id){
+        HashMap map=new HashMap();
+        map.put("code","0");
         usersDao.delete(id);
-        return true;
+        return map;
     }
 
 
     @RequestMapping("addOrUpdate")
-    public String  saveOrUpdate(UsersEntity usersEntity){
+    @ResponseBody
+    public HashMap  saveOrUpdate(UsersEntity usersEntity){
+        HashMap map=new HashMap();
+        map.put("code","0");
        // usersDao.insert(usersEntity);
         if (usersEntity.getId()==0||(""+usersEntity.getId()).equals("")){
             usersDao.insert(usersEntity);
         }else {
             usersDao.update(usersEntity);
         }
-        return "users";
+        return map;
     }
 
     @RequestMapping("page")
@@ -79,35 +84,35 @@ public class UserController {
     }
 
    @RequestMapping("userreg")
-    public String userreg(UsersEntity usersEntity){
-        usersEntity.setNickname("未填写");
-        usersEntity.setType("用户");
-        usersDao.insert(usersEntity);
-        return "userlogin";
+   @ResponseBody
+    public HashMap userreg(UsersEntity usersEntity){
+       System.out.println(usersEntity);
+        HashMap map=new HashMap();
+        int i=usersDao.insert(usersEntity);
+       if (i>0){
+           map.put("code",0);
+       }else {
+           map.put("code",1);
+       }
+       return map;
     }
 
 
 
 
-
     @RequestMapping("login")
-    public String login(String username,String password,HttpServletRequest request){
-        UsersEntity user=null;
-        List<UsersEntity> list=usersDao.list();
-        for (UsersEntity u:list) {
-            if (u.getUsername().equals(username)&&password.equals(u.getPassword())){
-                if (!u.getType().equals("管理员")){
-                    break;
-                }
-                user=u;
-                request.getSession().setAttribute("users",u);
-            }
-        }
+    @ResponseBody
+    public HashMap login(UsersEntity u,HttpServletRequest request){
+        System.out.println(u.getUsername()+u.getPassword());
+        HashMap map=new HashMap();
+        UsersEntity user=usersDao.login(u.getUsername(),u.getPassword());
+        map.put("users",user);
         if (user!=null){
-            return "index";
+            map.put("code",0);
         }else {
-            return "login";
+            map.put("code",1);
         }
+        return map;
     }
 
     @RequestMapping("userlogin")

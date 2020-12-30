@@ -2,175 +2,292 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>用户管理</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>用户中心</title>
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <script src="/lib/vue.js" ></script>
-    <script src="/lib/antdesign/antd.min.js" ></script>
-    <script src="/lib/axios.min.js" ></script>
-    <script src="/lib/layui/layui.js" ></script>
-    <link rel="stylesheet" href="/lib/antdesign/antd.min.css"></link>
 
+    <link rel="stylesheet" href="font/iconsmind-s/css/iconsminds.css" />
+    <link rel="stylesheet" href="font/simple-line-icons/css/simple-line-icons.css" />
+    <link rel="stylesheet" href="css/vendor/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" href="css/vendor/datatables.responsive.bootstrap4.min.css" />
+    <link rel="stylesheet" href="css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/vendor/bootstrap-float-label.min.css" />
 
-
-    <script src="/lib/moment.min.js"></script>
-    <script src="/lib/jquery.min.js"></script>
-    <script src="/lib/jquery.min.js"></script>
-    <link rel="stylesheet" href="/css/index.css"></link>
-    <link rel="stylesheet" href="/lib/layui/css/layui.css"></link>
-    <link rel="stylesheet" href="/lib/jqgrid/ui.jqgrid-bootstrap.css">
-
-
-    <script src="/lib/jqgrid/grid.locale-cn.js"></script>
-    <script src="/lib/jqgrid/jquery.jqGrid.min.js"></script></head>
-<script src="https://www.layuicdn.com/auto/layui.js" v="2.5.6" e="layui"></script>
+    <link rel="stylesheet" href="css/vendor/bootstrap.rtl.only.min.css" />
+    <link rel="stylesheet" href="css/vendor/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="css/vendor/component-custom-switch.min.css" />
+    <link rel="stylesheet" href="css/vendor/select2.min.css" />
+    <link rel="stylesheet" href="css/vendor/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+</head>
 <body>
 <div id="app">
-    <div v-show="show">
-        <table class="layui-hide" id="demo" lay-filter="demo"></table>
 
-        <script type="text/html" id="toolbarDemo">
-            <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
-            </div>
-        </script>
+<div class="container-fluid" v-show="show">
+    <div class="row">
+        <div class="col-12">
+            <h1>用户管理</h1>
 
-        <script type="text/html" id="barDemo">
-            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-        </script>
-    </div>
+            <div class="top-right-button-container">
+                <div class="btn-group">
+                    <button  class="btn btn-outline-primary mb-1" @click="showAddItem" type="button">
+                        添加
+                    </button>
 
-    <div v-show="!show">
-        <form class="layui-form" action="/users/addOrUpdate">
+                    <button class="btn btn-outline-primary mb-1" type="button" @click="showUpdateItem">
+                        编辑
+                    </button>
 
-                <div class="layui-form-item">
-                    <label class="layui-form-label">编号</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="id"  :value="users. id" class="layui-input">
+                    <button class="btn btn-outline-primary mb-1" type="button" @click="deleteItem()">
+                        删除
+                    </button>
+
+                    <button class="btn btn-outline-primary mb-1 dropdown-toggle" type="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        导出
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" id="dataTablesCopy" href="#">Copy</a>
+                        <a class="dropdown-item" id="dataTablesExcel" href="#">Excel</a>
+                        <a class="dropdown-item" id="dataTablesCsv" href="#">Csv</a>
+                        <a class="dropdown-item" id="dataTablesPdf" href="#">Pdf</a>
                     </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">用户名</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="username"  :value="users. username" class="layui-input">
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">密码</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="password"  :value="users. password" class="layui-input">
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">昵称</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="nickname"  :value="users. nickname" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">类型</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="type"  :value="users. type" class="layui-input">
-                    </div>
-                </div>
-
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
                 </div>
             </div>
-        </form>
+
+            <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                <ol class="breadcrumb pt-0">
+                    <li class="breadcrumb-item">
+                        <a href="#">Home</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#">Users</a>
+                    </li>
+                </ol>
+            </nav>
+            <div class="mb-2">
+                <a class="btn pt-0 pl-0 d-inline-block d-md-none" data-toggle="collapse" href="#displayOptions"
+                   role="button" aria-expanded="true" aria-controls="displayOptions">
+                    显示操作
+                    <i class="simple-icon-arrow-down align-middle"></i>
+                </a>
+                <div class="collapse dont-collapse-sm" id="displayOptions">
+                    <div class="d-block d-md-inline-block">
+                        <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
+                            <input class="form-control" placeholder="查询" id="searchDatatable">
+                        </div>
+                    </div>
+                    <div class="float-md-right dropdown-as-select" id="pageCountDatatable">
+                        <span class="text-muted text-small">单页展示行数</span>
+                        <button class="btn btn-outline-dark btn-xs dropdown-toggle" type="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            10
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#">5</a>
+                            <a class="dropdown-item active" href="#">10</a>
+                            <a class="dropdown-item" href="#">20</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="separator"></div>
+        </div>
     </div>
 
+    <div class="row">
+        <div class="col-12 mb-4 data-table-rows data-tables-hide-filter">
+            <table id="datatableRows"
+                   data-tableheader='[
+                        {"data":"id"},
+                        {"data":"username"},
+                        {"data":"password"},
+                        {"data":"nickname"},
+                        {"data":"type"}
+                    ]'
+                   data-ajax="http://localhost:8888/users/list"
+                   class="data-table responsive nowrap">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>用户名</th>
+                    <th>密码</th>
+                    <th>昵称</th>
+                    <th>类型</th>
+                </tr>
+                </thead>
+                <tbody id="tbody">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
-<script >
-    layui.use('table', function(){
-        var table = layui.table;
 
-        table.render({
-            elem: '#demo'
-            ,url:'/users/list'
-            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-            ,defaultToolbar: ['filter', 'exports', 'print']
-            ,title: '用户数据表'
-            ,cols: [
-                [
-                {field:'id', title:'编号'},
-                {field:'username', title:'用户名'},
-                {field:'password', title:'密码'},
-                {field:'nickname', title:'昵称'},
-                {field:'type', title:'类型'},
-                {fixed:'right',title:'操作',toolbar:'#barDemo'}
-                ]
-            ]
-            ,page: true
-        });
+    <div class="container-fluid" v-show="!show">
+        <div class="row">
+            <div class="col-12">
 
 
-        //头工具栏事件
-        table.on('toolbar(demo)', function(obj){
-            switch(obj.event){
-                case 'add':
-                    vue.handleAdd();
-                    break;
-            };
-        });
 
-        //监听行工具事件
-        table.on('tool(demo)', function(obj){
-            var data = obj.data;
-            if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
-                    vue.handleDelete(data.id);
-                    obj.del();
-                    layer.close(index);
-                });
-            } else if(obj.event === 'edit'){
-                vue.handleEdit(data);
-            } else if(obj.event === 'add'){
-                vue.handleAdd();
-            }
-        });
-    })
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="mb-4">用户信息</h5>
 
+                        <input type="hidden" v-model="user.id">
+
+                        <label class="form-group has-float-label mb-4">
+                            <input class="form-control" v-model="user.username"> <span>用户名</span>
+                        </label>
+
+                        <label class="form-group has-float-label mb-4">
+                            <input class="form-control" v-model="user.nickname"> <span>昵称</span>
+                        </label>
+
+                        <label class="form-group has-float-label mb-4">
+                            <input class="form-control" v-model="user.password"> <span>密码</span>
+                        </label>
+                        <label class="form-group has-float-label mb-4">
+                            <input class="form-control" v-model="user.type"> <span>类型</span>
+                        </label>
+
+                        <button  class="btn btn-primary btn-lg btn-shadow" @click="addItem">提交</button>
+                        <button  class="btn btn-primary btn-lg btn-shadow" @click="reback">返回</button>
+
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+
+<script src="js/vendor/jquery-3.3.1.min.js"></script>
+
+
+
+<script src="js/vendor/bootstrap.bundle.min.js"></script>
+<script src="js/vendor/perfect-scrollbar.min.js"></script>
+<script src="js/vendor/jquery.validate/jquery.validate.min.js"></script>
+<script src="js/vendor/jquery.validate/additional-methods.min.js"></script>
+<script src="js/vendor/datatables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+<script src="js/vendor/select2.full.js"></script>
+<script src="js/dore.script.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/vendor/vue.min.js"></script>
+<script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
+<script src="js/vendor/axios.min.js"></script>
+<script src="js/vendor/bootstrap-notify.min.js"></script>
+
+<script>
+    // 消除子窗口内的theme主题按钮
+    $(".theme-button").remove()
 
 
     var vue=new Vue({
         el:'#app',
-        data:{
-            show:true,
-            users :{}
+        data(){
+            return {
+                show:true,
+                action:0, // action 为1时进行添加，为2时进行修改
+                user:[],
+            }
         },
         methods:{
-            handleAdd(){
-                this.show=false;
-                this.users={};
-            },
-            handleEdit(users){
-                this.show=false;
-                this.users=users;
-            },
-            handleDelete(id){
-                axios.get("/users/delete?id="+id).then(function (response) {
-                    this.$message.error('删除成功！');
-                }).catch(function (error) {
-                    console.log(error)
-                });
-            },
-            returnMain(){
+            reback(){
                 this.show=true;
+            },
+            addItem(){
+
+                $.ajax({
+                    type: 'POST',
+                    url: host+"users/addOrUpdate",
+                    data: {
+                        id:this.user.id,
+                        username:this.user.username,
+                        password:this.user.password,
+                        type:this.user.type,
+                        nickname:this.user.nickname
+                    },
+                    success: function (response){
+                        console.log(response)
+                        if(response.code==0){
+                            showNotify('top', 'center', "success","结果","保存成功！");
+                            datatableRow.ajax.reload();
+                        }else{
+                            showNotify('top', 'center', "danger","结果","保存失败，请重新尝试。");
+                        }
+                    }
+                });
+
+            },
+            cancleEdit(){
+                // 返回表格
+                this.show=true;
+            },
+            deleteItem(){
+                this.user=datatableRow.rows('.selected').data();
+
+                $.ajax({
+                    type: 'POST',
+                    url: host+"users/delete",
+                    data: {
+                        id:this.user[0].id
+                    },
+                    success: function (response){
+                        console.log(response)
+                        if(response.code==0){
+                            showNotify('top', 'center', "success","结果","删除成功！");
+                            datatableRow.ajax.reload();
+                        }else{
+                            showNotify('top', 'center', "danger","结果","删除失败，请重新尝试。");
+                        }
+                    }
+                });
+
+            },
+            showUpdateItem(){
+              // 显示修改界面
+              console.log(datatableRow.rows('.selected').data());
+              var choose=datatableRow.rows('.selected').data();
+              if (choose.length>1){
+                  showNotify('top', 'center', "warning","提示","只能编辑一条数据哦！");
+                  return ;
+              }
+              if (choose.length==0){
+                  showNotify('top', 'center', "warning","提示","请选择要编辑的数据哦！");
+                  return ;
+              }
+
+              this.user=choose[0];
+              this.show=false;
+              this.action=1;
+            },
+            showAddItem(){
+                //显示添加界面
+                this.show=false;
+                this.action=2;
+                // 清空
+                this.user={}
             }
         }
     })
+
 </script>
 
 
-</body>
 </html>

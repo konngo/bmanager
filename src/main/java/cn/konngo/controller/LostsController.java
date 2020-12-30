@@ -27,7 +27,7 @@ public class LostsController {
         map.put("msg","");
         List<LostsEntity> list=lostsDao.findAll(siji,buslines,losts);
         map.put("count",list.size());
-        map.put("data",list);
+        map.put("aaData",list);
         return map;
     }
 

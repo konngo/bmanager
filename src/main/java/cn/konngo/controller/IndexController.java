@@ -11,13 +11,44 @@ public class IndexController {
     }
 
 
-    @RequestMapping("toindex")
-    public String index(){
+    @RequestMapping("register")
+    public String register(){
+        return "register";
+    }
+
+    @RequestMapping("goindex")
+    public String goindex(){
+        return "index";
+    }
+
+    @RequestMapping("main")
+    public String main(){
         return "main";
     }
 
-    @RequestMapping("userlogin")
-    public String userlogin(){
-        return "userlogin";
+    @RequestMapping("users")
+    public String users(){
+        return "users";
     }
+
+    @RequestMapping("siji")
+    public String siji(){
+        return "siji";
+    }
+
+    @RequestMapping("buslines")
+    public String buslines(){
+        return "buslines";
+    }
+
+    @RequestMapping("bus")
+    public String bus(){
+        return "bus";
+    }
+
+    @RequestMapping("losts")
+    public String losts(){
+        return "losts";
+    }
+
 }
