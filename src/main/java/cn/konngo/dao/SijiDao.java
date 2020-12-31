@@ -30,13 +30,13 @@ List<SijiEntity> list();
     /**
     * 更新
     */
-    @Update("update siji set id=#{id},name=#{name},phone=#{phone},age=#{age} where id=#{id}")
+    @Update("update siji set imgurl=#{imgurl},name=#{name},phone=#{phone},age=#{age} where id=#{id}")
     void update(SijiEntity sijiEntity);
 
     /**
     * 插入
     */
-    @Insert("insert into siji (name,phone,age) values( #{name},#{phone},#{age})")
+    @Insert("insert into siji (name,phone,age,imgurl) values( #{name},#{phone},#{age},#{imgurl})")
     void insert(SijiEntity sijiEntity);
 
     }

@@ -31,7 +31,16 @@ public class SijiEntity implements Serializable {
 
         //年龄
         private int age;
+        private String imgurl;
 
+
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
+    }
 
     public int getId() {
         return id;

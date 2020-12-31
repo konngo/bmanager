@@ -69,7 +69,8 @@ var vm=new Vue({
         }
 
     },created(){
-        localStorage.setItem("user",'admin')
+        //localStorage.setItem("user",'admin')
+        console.log(localStorage.getItem("username"))
     }
 });
 

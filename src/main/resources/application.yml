@@ -30,6 +30,8 @@ mybatis:
     map-underscore-to-camel-case: true
   # mapper-locations: classpath:/mapper/
 
+
+
 # 打印sql
 logging:
   level:

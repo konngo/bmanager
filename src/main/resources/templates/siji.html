@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/vendor/bootstrap.min.css" />
     <link rel="stylesheet" href="css/vendor/bootstrap-float-label.min.css" />
 
+    <link rel="stylesheet" href="css/vendor/dropzone.min.css" />
     <link rel="stylesheet" href="css/vendor/bootstrap.rtl.only.min.css" />
     <link rel="stylesheet" href="css/vendor/perfect-scrollbar.css" />
     <link rel="stylesheet" href="css/vendor/component-custom-switch.min.css" />
@@ -21,7 +22,7 @@
     <link rel="stylesheet" href="css/vendor/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="css/main.css" />
 </head>
-<body>
+<body class="show-spinner">
 <div id="app">
 
     <div class="container-fluid" v-show="show">
@@ -62,7 +63,7 @@
                             <a href="#">Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="#">Users</a>
+                            <a href="#">siji</a>
                         </li>
                     </ol>
                 </nav>
@@ -99,20 +100,17 @@
         <div class="row">
             <div class="col-12 mb-4 data-table-rows data-tables-hide-filter">
                 <table id="datatableRows"
-                       data-tableheader='[
-                        {"data":"id"},
-                        {"data":"name"},
-                        {"data":"phone"},
-                        {"data":"age"}
-                    ]'
+                        data-tableheader='temp_header'
                        data-ajax="http://localhost:8888/siji/list"
                        class="data-table responsive nowrap">
                     <thead>
+
                     <tr>
                         <th>#</th>
                         <th>姓名</th>
                         <th>手机号</th>
                         <th>年龄</th>
+                        <th>工作照</th>
                     </tr>
                     </thead>
                     <tbody id="tbody">
@@ -148,10 +146,24 @@
                             <input class="form-control" v-model="siji.age"> <span>年龄</span>
                         </label>
 
+
+                    </div>
+                </div>
+
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="mb-4">工作照</h5>
+                        <form action="/file-upload">
+                            <div class="dropzone">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
                         <button  class="btn btn-primary btn-lg btn-shadow" @click="addItem">提交</button>
                         <button  class="btn btn-primary btn-lg btn-shadow" @click="reback">返回</button>
-
-
                     </div>
                 </div>
 
@@ -168,7 +180,7 @@
 <script src="js/vendor/jquery-3.3.1.min.js"></script>
 
 
-
+<script src="js/vendor/dropzone.min.js"></script>
 <script src="js/vendor/bootstrap.bundle.min.js"></script>
 <script src="js/vendor/perfect-scrollbar.min.js"></script>
 <script src="js/vendor/jquery.validate/jquery.validate.min.js"></script>
@@ -188,9 +200,12 @@
 <script src="js/vendor/axios.min.js"></script>
 <script src="js/vendor/bootstrap-notify.min.js"></script>
 
+
+
 <script>
     // 消除子窗口内的theme主题按钮
     $(".theme-button").remove()
+
 
 
     var vue=new Vue({
@@ -200,6 +215,7 @@
                 show:true,
                 action:0, // action 为1时进行添加，为2时进行修改
                 siji:[],
+
             }
         },
         methods:{
@@ -207,6 +223,13 @@
                 this.show=true;
             },
             addItem(){
+                // 获取图片地址
+                console.log(tempimg)
+                var imgdata=imghost+tempimg.data;
+
+                if (imgdata==imghost){
+                    imgdata=this.siji.imgurl
+                }
 
                 $.ajax({
                     type: 'POST',
@@ -215,6 +238,7 @@
                         id:this.siji.id,
                         name:this.siji.name,
                         phone:this.siji.phone,
+                        imgurl:imgdata,
                         age:this.siji.age
                     },
                     success: function (response){
@@ -234,13 +258,13 @@
                 this.show=true;
             },
             deleteItem(){
-                this.user=datatableRow.rows('.selected').data();
+                this.siji=datatableRow.rows('.selected').data();
 
                 $.ajax({
                     type: 'POST',
                     url: host+"siji/delete",
                     data: {
-                        id:this.user[0].id
+                        id:this.siji[0].id
                     },
                     success: function (response){
                         console.log(response)
@@ -268,7 +292,7 @@
                     return ;
                 }
 
-                this.user=choose[0];
+                this.siji=choose[0];
                 this.show=false;
                 this.action=1;
             },
@@ -277,9 +301,10 @@
                 this.show=false;
                 this.action=2;
                 // 清空
-                this.user={}
+                this.siji={}
             }
-        }
+        },
+
     })
 
 </script>

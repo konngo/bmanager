@@ -51,7 +51,9 @@ Table of Contents
 */
 
 /* 00. host*/
-var host='http://localhost:8888/'
+var host='http://localhost:8888/';
+var imghost="http://ftp.konngo.cn/demo120901/";
+var tempimg="";
 
 /* 01. Utils */
 $.fn.addCommas = function (nStr) {
@@ -2999,6 +3001,23 @@ $.dore = function (element, options) {
 
 
       var header=$("#datatableRows").data('tableheader');
+
+      var temp_header=[
+        {"data":"id"},
+        {"data":"name"},
+        {"data":"phone"},
+        {"data":"age"},
+        {"data":"imgurl","render":function  ( data, type, full, meta ) {
+            return "<img src='"+data+"'  class=\"img-thumbnail list-thumbnail xsmall border-0 rounded-circle\"></img>";
+          }
+        }
+      ];
+
+      if(header=='temp_header'){
+          header=temp_header;
+      }
+
+      console.log(header)
       // Datatable with rows
       var $dataTableRows = $("#datatableRows").DataTable({
         bLengthChange: false,
@@ -3435,10 +3454,11 @@ $.dore = function (element, options) {
     /* 03.20. Dropzone */
     if ($().dropzone && !$(".dropzone").hasClass("disabled")) {
       $(".dropzone").dropzone({
-        url: "https://httpbin.org/post",
+        url: "/file-upload",
         init: function () {
           this.on("success", function (file, responseText) {
             console.log(responseText);
+            tempimg=responseText;
           });
         },
         thumbnailWidth: 160,

@@ -89,7 +89,10 @@
                         console.log(response)
                         if(response.code==0){
                             showNotify('top', 'center', "success","登录结果","登录成功！");
-                            window.location.href="index";
+                            var user=response.users;
+                            console.log(user)
+                            localStorage.setItem("username",user.username)
+                            window.location.href="goindex";
                         }else{
                             showNotify('top', 'center', "danger","添加结果","登录失败，请检查用户名密码。");
                         }

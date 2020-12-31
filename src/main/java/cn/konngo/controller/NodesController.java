@@ -34,19 +34,24 @@ public class NodesController {
 
     @RequestMapping("delete")
     @ResponseBody
-    public boolean delte(int id){
+    public HashMap delte(int id){
+        HashMap map=new HashMap();
+        map.put("code","0");
         nodesDao.delete(id);
-        return true;
+        return map;
     }
 
     @RequestMapping("addOrUpdate")
-    public String  saveOrUpdate(NodesEntity sijiEntity){
+    @ResponseBody
+    public HashMap  saveOrUpdate(NodesEntity sijiEntity){
+        HashMap map=new HashMap();
+        map.put("code","0");
         if (sijiEntity.getId()==0||(""+sijiEntity.getId()).equals("")){
             nodesDao.insert(sijiEntity);
         }else {
             nodesDao.update(sijiEntity);
         }
-        return "siji";
+        return map;
     }
 
 

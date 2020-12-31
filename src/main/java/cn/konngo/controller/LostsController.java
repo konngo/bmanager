@@ -33,19 +33,24 @@ public class LostsController {
 
     @RequestMapping("delete")
     @ResponseBody
-        public boolean delte(int id){
+        public HashMap delte(int id){
+        HashMap map=new HashMap();
+        map.put("code","0");
         lostsDao.delete(id);
-        return true;
+        return map;
     }
 
     @RequestMapping("addOrUpdate")
-    public String  saveOrUpdate(LostsEntity lostsEntity){
+    @ResponseBody
+    public HashMap  saveOrUpdate(LostsEntity lostsEntity){
+        HashMap map=new HashMap();
+        map.put("code","0");
         if (lostsEntity.getId()==0||(""+lostsEntity.getId()).equals("")){
             lostsDao.insert(lostsEntity);
         }else {
             lostsDao.update(lostsEntity);
         }
-        return "losts";
+        return map;
     }
 
 

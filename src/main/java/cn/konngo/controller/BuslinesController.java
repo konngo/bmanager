@@ -32,19 +32,25 @@ public class BuslinesController {
 
     @RequestMapping("delete")
     @ResponseBody
-        public boolean delte(int id){
+        public HashMap delte(int id){
+
+        HashMap map=new HashMap();
+        map.put("code","0");
         buslinesDao.delete(id);
-        return true;
+        return map;
     }
 
     @RequestMapping("addOrUpdate")
-    public String  saveOrUpdate(BuslinesEntity buslinesEntity){
+    @ResponseBody
+    public HashMap  saveOrUpdate(BuslinesEntity buslinesEntity){
+        HashMap map=new HashMap();
+        map.put("code","0");
         if (buslinesEntity.getId()==0||(""+buslinesEntity.getId()).equals("")){
             buslinesDao.insert(buslinesEntity);
         }else {
             buslinesDao.update(buslinesEntity);
         }
-        return "buslines";
+        return map;
     }
 
 
