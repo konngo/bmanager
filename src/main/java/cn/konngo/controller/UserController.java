@@ -21,6 +21,8 @@ public class UserController {
     UsersDao usersDao;
 
 
+
+
     @RequestMapping("list")
     @ResponseBody
     public Map searchAll(){
@@ -106,6 +108,22 @@ public class UserController {
         System.out.println(u.getUsername()+u.getPassword());
         HashMap map=new HashMap();
         UsersEntity user=usersDao.login(u.getUsername(),u.getPassword());
+        map.put("users",user);
+        if (user!=null){
+            map.put("code",0);
+        }else {
+            map.put("code",1);
+        }
+        return map;
+    }
+
+
+
+    @RequestMapping("search")
+    @ResponseBody
+    public HashMap search(int id,HttpServletRequest request){
+        HashMap map=new HashMap();
+        UsersEntity user=usersDao.serach(id);
         map.put("users",user);
         if (user!=null){
             map.put("code",0);

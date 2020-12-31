@@ -41,4 +41,7 @@ public interface UsersDao {
 
     @Select("select * from users where  username=#{username} and password=#{password}")
     UsersEntity login(String username, String password);
+
+    @Select("select * from users where id=#{id}")
+    UsersEntity serach(int id);
 }

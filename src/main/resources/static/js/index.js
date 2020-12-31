@@ -59,17 +59,36 @@ var vm=new Vue({
             ],
             submenus:[
                 // {id:"dashboard",list:[{src:'Dashboard.Default.html',icon:'simple-icon-rocket',name:'default'}]}
+                {id:"profile",list:[{src:'profile',icon:'simple-icon-rocket',name:'default'}]}
                 ],
+            usermenu:[
+                {id:'sijilist',name:'司机',icon:'iconsminds-air-balloon-1'},
+                {id:'linelist',name:'线路',icon:'iconsminds-roof'},
+                {id:'lostlist',name:'失物招领',icon:'iconsminds-sunglasses-w-3'},
+            ],
             main:'main'
         }
     },
     methods:{
         changemenu(item){
             this.main=item;
+        },
+        logout(){
+            localStorage.setItem("username","")
+            localStorage.setItem("usertype","")
+            localStorage.setItem("userid","")
+            window.location.href="login";
+        },
+        profile(){
+            this.main="profile";
         }
 
     },created(){
-        //localStorage.setItem("user",'admin')
+        var type=localStorage.getItem("usertype")
+        if (type=='用户'){
+            this.main="sijilist";
+            this.menulist=this.usermenu
+        }
         console.log(localStorage.getItem("username"))
     }
 });

@@ -92,6 +92,8 @@
                             var user=response.users;
                             console.log(user)
                             localStorage.setItem("username",user.username)
+                            localStorage.setItem("usertype",user.type)
+                            localStorage.setItem("userid",user.id)
                             window.location.href="goindex";
                         }else{
                             showNotify('top', 'center', "danger","添加结果","登录失败，请检查用户名密码。");

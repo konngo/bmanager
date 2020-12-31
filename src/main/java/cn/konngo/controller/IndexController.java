@@ -58,10 +58,25 @@ public class IndexController {
     public String siji(){
         return "siji";
     }
+    @RequestMapping("linelist")
+    public String linelist(){
+        return "linelist";
+    }
+
+    @RequestMapping("sijilist")
+    public String sijilist(){
+        return "sijilist";
+    }
 
     @RequestMapping("buslines")
     public String buslines(){
         return "buslines";
+    }
+
+
+    @RequestMapping("lostlist")
+    public String lostlist(){
+        return "lostlist";
     }
 
     @RequestMapping("bus")
@@ -72,6 +87,11 @@ public class IndexController {
     @RequestMapping("losts")
     public String losts(){
         return "losts";
+    }
+
+    @RequestMapping("profile")
+    public String profile(){
+        return "profile";
     }
 
 }

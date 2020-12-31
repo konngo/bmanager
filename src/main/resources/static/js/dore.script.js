@@ -54,6 +54,7 @@ Table of Contents
 var host='http://localhost:8888/';
 var imghost="http://ftp.konngo.cn/demo120901/";
 var tempimg="";
+var dropimgzone=null;
 
 /* 01. Utils */
 $.fn.addCommas = function (nStr) {
@@ -3453,7 +3454,7 @@ $.dore = function (element, options) {
 
     /* 03.20. Dropzone */
     if ($().dropzone && !$(".dropzone").hasClass("disabled")) {
-      $(".dropzone").dropzone({
+      dropimgzone=$(".dropzone").dropzone({
         url: "/file-upload",
         init: function () {
           this.on("success", function (file, responseText) {

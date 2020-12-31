@@ -127,7 +127,6 @@
             <div class="col-12">
 
 
-
                 <div class="card mb-4">
                     <div class="card-body">
                         <h5 class="mb-4">司机信息</h5>
@@ -280,6 +279,8 @@
 
             },
             showUpdateItem(){
+                // 清空图片
+                dropimgzone.removeAllFiles();
                 // 显示修改界面
                 console.log(datatableRow.rows('.selected').data());
                 var choose=datatableRow.rows('.selected').data();
@@ -297,6 +298,7 @@
                 this.action=1;
             },
             showAddItem(){
+                dropimgzone.removeAllFiles();
                 //显示添加界面
                 this.show=false;
                 this.action=2;

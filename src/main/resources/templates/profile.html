@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="font/iconsmind-s/css/iconsminds.css" />
+    <link rel="stylesheet" href="font/simple-line-icons/css/simple-line-icons.css" />
+    <link rel="stylesheet" href="css/vendor/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" href="css/vendor/datatables.responsive.bootstrap4.min.css" />
+    <link rel="stylesheet" href="css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/vendor/bootstrap-float-label.min.css" />
+
+    <link rel="stylesheet" href="css/vendor/bootstrap-tagsinput.css" />
+    <link rel="stylesheet" href="css/vendor/bootstrap.rtl.only.min.css" />
+    <link rel="stylesheet" href="css/vendor/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="css/vendor/component-custom-switch.min.css" />
+    <link rel="stylesheet" href="css/vendor/select2.min.css" />
+    <link rel="stylesheet" href="css/vendor/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+<body  class="show-spinner">
+
+<div class="container-fluid" id="app">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="mb-4">个人中心</h5>
+                        <input type="hidden" v-model="users.id">
+                        <div class="form-group">
+                            <label for="username">用户名</label>
+                            <input type="text" id="username"   v-model="users.username" class="form-control" >
+<!--                            <small id="emailHelp" class="form-text text-muted">We'll never share your email-->
+<!--                                with anyone else.</small>-->
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">密码</label>
+                            <input type="text"  v-model="users.password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nickname">密码</label>
+                            <input type="text"  v-model="users.nickname" class="form-control" id="nickname">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="type">用户类型</label>
+                            <input type="text"  v-model="users.type" disabled class="form-control" id="type">
+                        </div>
+
+
+                        <button class="btn btn-primary mb-0">提交</button>
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="js/vendor/jquery-3.3.1.min.js"></script>
+<script src="js/vendor/bootstrap.bundle.min.js"></script>
+<script src="js/vendor/perfect-scrollbar.min.js"></script>
+<script src="js/vendor/jquery.validate/jquery.validate.min.js"></script>
+<script src="js/vendor/jquery.validate/additional-methods.min.js"></script>
+<script src="js/vendor/bootstrap-tagsinput.min.js"></script>
+<script src="js/vendor/datatables.min.js"></script>
+<script src="js/vendor/bootstrap-datepicker.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+<script src="js/vendor/select2.full.js"></script>
+<script src="js/dore.script.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/vendor/vue.min.js"></script>
+<script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
+<script src="js/vendor/axios.min.js"></script>
+<script src="js/vendor/bootstrap-notify.min.js"></script>
+
+
+<script>
+
+    // 消除子窗口内的theme主题按钮
+    $(".theme-button").remove()
+
+    var vue=new Vue({
+        el: '#app',
+        data() {
+            return {
+                users:{}
+            }
+        },
+        methods:{
+            init(){
+                var id=localStorage.getItem("userid");
+                var self=this;
+
+                $.ajax({
+                    type: 'POST',
+                    url: host+"users/search",
+                    data: {
+                        id:id
+                    },
+                    success: function (response){
+                        if(response.code==0){
+                            self.users=response.users
+                            console.log(self.users)
+                        }else{
+                            showNotify('top', 'center', "danger","用户信息","获取个人信息失败，请稍后重新尝试。");
+                        }
+                    },
+                    error:function (){
+                        showNotify('top', 'center', "danger","用户信息","获取个人信息失败，请稍后重新尝试。");
+                    }
+                });
+            },
+            changeProfile(){
+                $.ajax({
+                    type: 'POST',
+                    url: host+"users/addOrUpdate",
+                    data: {
+                        id:this.user.id,
+                        username:this.user.username,
+                        password:this.user.password,
+                        type:this.user.type,
+                        nickname:this.user.nickname
+                    },
+                    success: function (response){
+                        if(response.code==0){
+                        }else{
+                            showNotify('top', 'center', "success","用户信息","修改用户信息成功！");
+                        }
+                    },
+                    error:function (){
+                        showNotify('top', 'center', "danger","用户信息","修改个人信息失败，请稍后重新尝试。");
+                    }
+                });
+            }
+        },
+        mounted(){
+            this.init();
+        }
+    })
+</script>
+</body>
+</html>
