@@ -98,6 +98,9 @@
                         }else{
                             showNotify('top', 'center', "danger","添加结果","登录失败，请检查用户名密码。");
                         }
+                    },
+                    error:function(response){
+                        showNotify('top', 'center', "danger","添加结果","服务器连接异常，请重试！");
                     }
                 });
 

@@ -36,7 +36,6 @@
                             </a>
                             <h6 class="mb-4">注册</h6>
 
-                            <form>
                                 <label class="form-group has-float-label mb-4">
                                     <input class="form-control" v-model="user.username" />
                                     <span>用户名</span>
@@ -53,7 +52,6 @@
                                     <a href="login">返回登录</a>
                                     <button class="btn btn-primary btn-lg btn-shadow" @click="register">注册</button>
                                 </div>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -95,6 +93,9 @@
                         }else{
                             showNotify('top', 'center', "danger","添加结果","注册失败，请重试！");
                         }
+                    },
+                    error:function(response){
+                        showNotify('top', 'center', "danger","添加结果","服务器连接异常，请重试！");
                     }
                 });
 

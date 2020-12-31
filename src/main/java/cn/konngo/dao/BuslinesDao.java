@@ -36,7 +36,7 @@ List<BuslinesEntity> list();
     /**
     * 插入
     */
-    @Insert("insert into buslines values( #{startstation},#{endstation},#{starttime},#{endtime} )")
+    @Insert("insert into buslines (startstation,endstation,starttime,endtime) values( #{startstation},#{endstation},#{starttime},#{endtime} )")
     void insert(BuslinesEntity buslinesEntity);
 
     }

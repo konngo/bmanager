@@ -53,7 +53,7 @@
                         </div>
 
 
-                        <button class="btn btn-primary mb-0">提交</button>
+                        <button @click="changeProfile" class="btn btn-primary mb-0">提交</button>
 
 
                 </div>
@@ -132,15 +132,14 @@
                     type: 'POST',
                     url: host+"users/addOrUpdate",
                     data: {
-                        id:this.user.id,
-                        username:this.user.username,
-                        password:this.user.password,
-                        type:this.user.type,
-                        nickname:this.user.nickname
+                        id:this.users.id,
+                        username:this.users.username,
+                        password:this.users.password,
+                        type:this.users.type,
+                        nickname:this.users.nickname
                     },
                     success: function (response){
                         if(response.code==0){
-                        }else{
                             showNotify('top', 'center', "success","用户信息","修改用户信息成功！");
                         }
                     },

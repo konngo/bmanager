@@ -69,7 +69,6 @@ public class FtpUtil {
             //17、这才是真正上传方法storeFile(filename,input),返回Boolean雷类型，上传成功返回true
             if (!ftp.storeFile(new String(fileName.getBytes(StandardCharsets.UTF_8),"iso-8859-1"), inputStream)) {
 
-                System.out.println("为啥");
                 return false;
             }
             // 18.关闭输入流

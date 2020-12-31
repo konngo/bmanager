@@ -85,6 +85,10 @@
 <script src="js/vendor/bootstrap-notify.min.js"></script>
 </body>
 <script>
+    // 消除子窗口内的theme主题按钮
+    $(".theme-button").remove()
+
+
     var vue=new Vue({
         el: '#app',
         data() {

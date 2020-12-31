@@ -35,7 +35,7 @@ public interface LostsDao {
     /**
      * 插入
      */
-    @Insert("insert into losts values( #{name},#{content},#{buslines},#{siji})")
+    @Insert("insert into losts (name,content,buslines,siji) values( #{name},#{content},#{buslines},#{siji})")
     void insert(LostsEntity lostsEntity);
 
     /**
